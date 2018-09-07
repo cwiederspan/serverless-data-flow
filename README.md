@@ -5,15 +5,28 @@
 **Role:** Microsoft Azure App Dev Specialist  
 **Email:** chris.wiederspan@microsoft.com
 
-## Azure Resource Setup
+## Getting Started
+`git clone https://github.com/cwiederspan/serverless-data-flow.git`
 
-Create an Azure Resource Group for storing all of the related resources for this project.
+## Azure Resource Setup Using Terraform
+```
+cd Prerequisites
+terraform init
+terraform apply
+```
 
-**Name:** <VALID_RG_NAME>  
-**Region:** <VALID_REGION>
+## Azure Function Bindings
+[Blob Storage](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob)  
+[Table Storage](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-table)  
+[Storage Queues](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-queue)  
+[Event Grid](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-event-grid)  
 
-Create an Azure Storage Account that will be used to store file blobs and queued messages.
+## Eventing and Data Exchange
+[Service Comparison](https://azure.microsoft.com/en-us/blog/events-data-points-and-messages-choosing-the-right-azure-messaging-service-for-your-data/)
+[Event Grid](https://docs.microsoft.com/en-us/azure/event-grid/overview)
+[Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview)
 
-**Name:** <VALID_STORAGE_NAME>  
-**Region:** <VALID_REGION> (eg. westus2)
-
+## Microservices
+[Overview](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-overview-microservices)
+[Building Microservices Book](http://shop.oreilly.com/product/0636920033158.do)
+[Sam Newman Video](https://www.youtube.com/watch?v=PFQnNFe27kU)

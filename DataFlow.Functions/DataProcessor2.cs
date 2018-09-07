@@ -12,14 +12,13 @@ using Newtonsoft.Json.Serialization;
 
 namespace DataFlow.Functions {
 
-    public static class UnzippedFileProcessor {
+    public static class DataProcessor2 {
 
-        [FunctionName("ProcessFile")]
+        [FunctionName("ProcessDataStage2")]
         public static async Task Run(
             [BlobTrigger("unzipped-data/{name}", Connection = "AzureWebJobsStorage")]Stream myBlob,
             [Blob("unzipped-data", Connection = "AzureWebJobsStorage")] CloudBlobContainer container,
-            [CosmosDB("mydata", "items", ConnectionStringSetting = "AzureWebJobsCosmosDb")] IAsyncCollector<DataEntry> documentsToStore,
-            [Queue("entries", Connection = "AzureWebJobsStorage")] IAsyncCollector<string> queueCollector,
+            [Table("sampledata", Connection = "AzureWebJobsStorage")] IAsyncCollector<TableEntry> table,
             string name,
             ILogger log
         ) {
@@ -40,17 +39,21 @@ namespace DataFlow.Functions {
             }
 
             // Add each item to the collection
-            var docTasks = entries.Select(async e => {
-                await documentsToStore.AddAsync(e);
-                return e.Id;
+            var docTasks = entries.Select(async doc => {
+                await table.AddAsync(new TableEntry {
+                    PartitionKey = doc.Company,
+                    RowKey = doc.Id,
+                    Name = $"{doc.Name.First} {doc.Name.Last}",
+                    Company = doc.Company,
+                    Address = doc.Address,
+                    Email = doc.Email,
+                    Phone = doc.Phone
+                });
+                return doc.Id;
             }).ToList();
 
             // Get a list of all of the IDs that were written to CosmosDB
             var ids = await Task.WhenAll(docTasks);
-
-            // Enqueue a string with each of the IDs that was written
-            var queueTasks = ids.ToList().Select(async id => await queueCollector.AddAsync(id));
-            await Task.WhenAll(queueTasks);
 
             // Delete the file we just processed
             var existingBlob = container.GetBlockBlobReference(name);

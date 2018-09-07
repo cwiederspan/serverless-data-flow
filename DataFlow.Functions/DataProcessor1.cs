@@ -7,9 +7,9 @@ using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace DataFlow.Functions {
 
-    public static class ZippedFileProcessor {
+    public static class DataProcessor1 {
 
-        [FunctionName("UnzipFile")]
+        [FunctionName("ProcessDataStage1")]
         public static async Task Run(
             [BlobTrigger("zipped-data/{name}", Connection = "AzureWebJobsStorage")]Stream myBlob, 
             [Blob("zipped-data", Connection = "AzureWebJobsStorage")] CloudBlobContainer incomingContainer,
