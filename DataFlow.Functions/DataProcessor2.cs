@@ -19,6 +19,7 @@ namespace DataFlow.Functions {
             [BlobTrigger("unzipped-data/{name}", Connection = "AzureWebJobsStorage")]Stream myBlob,
             [Blob("unzipped-data", Connection = "AzureWebJobsStorage")] CloudBlobContainer container,
             [Table("sampledata", Connection = "AzureWebJobsStorage")] IAsyncCollector<TableEntry> table,
+            [Queue("entries", Connection = "AzureWebJobsStorage")] IAsyncCollector<string> queue,
             string name,
             ILogger log
         ) {
@@ -40,6 +41,8 @@ namespace DataFlow.Functions {
 
             // Add each item to the collection
             var docTasks = entries.Select(async doc => {
+
+                // Save the the table storage
                 await table.AddAsync(new TableEntry {
                     PartitionKey = doc.Company,
                     RowKey = doc.Id,
@@ -49,7 +52,13 @@ namespace DataFlow.Functions {
                     Email = doc.Email,
                     Phone = doc.Phone
                 });
+                
+                // Save to the queue
+                await queue.AddAsync(doc.Id);
+
+                // Return the document ID
                 return doc.Id;
+
             }).ToList();
 
             // Get a list of all of the IDs that were written to CosmosDB

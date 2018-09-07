@@ -6,9 +6,10 @@
 **Email:** chris.wiederspan@microsoft.com
 
 ## Getting Started
-`git clone https://github.com/cwiederspan/serverless-data-flow.git`
+`git clone https://github.com/cwiederspan/serverless-data-flow.git`  
 
 ## Azure Resource Setup Using Terraform
+[Terraform Providers](https://www.terraform.io/docs/providers/azurerm/index.html)  
 ```
 cd Prerequisites
 terraform init
