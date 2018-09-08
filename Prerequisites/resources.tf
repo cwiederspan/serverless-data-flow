@@ -19,14 +19,14 @@ resource "azurerm_storage_account" "storageaccount" {
   account_replication_type = "LRS"
 }
 
-resource "azurerm_storage_container" "unzipped_data" {
+resource "azurerm_storage_container" "zipped_data" {
   name                  = "zipped-data"
   resource_group_name   = "${azurerm_resource_group.group.name}"
   storage_account_name  = "${azurerm_storage_account.storageaccount.name}"
   container_access_type = "private"
 }
 
-resource "azurerm_storage_container" "zipped_data" {
+resource "azurerm_storage_container" "unzipped_data" {
   name                  = "unzipped-data"
   resource_group_name   = "${azurerm_resource_group.group.name}"
   storage_account_name  = "${azurerm_storage_account.storageaccount.name}"
