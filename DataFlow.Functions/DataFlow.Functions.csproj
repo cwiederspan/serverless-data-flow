@@ -4,19 +4,15 @@
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Unused_DataProcessor2.cs" />
     <Compile Remove="Unused_DataProcessor3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Unused_DataProcessor3.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Unused_DataProcessor2.cs" />
-  </ItemGroup>
-  <ItemGroup>
-      <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.CosmosDB" Version="3.0.1-beta2" />
-      <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="3.0.0-beta8" />
-      <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.19" />
+      <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.CosmosDB" Version="3.0.1" />
+      <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="3.0.0" />
+      <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.22" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
